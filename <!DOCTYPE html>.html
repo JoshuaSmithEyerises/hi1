@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Memory Book</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #ffe6f0;
+            color: #ff69b4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            text-align: center;
+            padding: 20px;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+        }
+
+        .header {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #ff4081;
+        }
+
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .button-grid button {
+            background: linear-gradient(135deg, #ff69b4, #ff4081);
+            border: none;
+            color: white;
+            padding: 15px;
+            font-size: 1rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .button-grid button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        #message-box {
+            margin-top: 30px;
+            padding: 20px;
+            background: #ffe6f0;
+            border: 2px dashed #ff69b4;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            display: none;
+        }
+
+        #playlist {
+            margin-top: 20px;
+            padding: 15px;
+            background: #ff69b4;
+            color: white;
+            border-radius: 10px;
+            font-size: 1rem;
+        }
+
+        #playlist a {
+            color: #fff;
+            text-decoration: underline;
+        }
+        .carousel {
+        position: relative;
+        max-width: 600px;
+        margin: auto;
+        overflow: hidden;
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .carousel-slides {
+        display: flex;
+        transition: transform 0.5s ease-in-out;
+    }
+
+    .slide {
+        min-width: 100%;
+        height: auto;
+        user-select: none;
+    }
+
+    .carousel-button {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        z-index: 10;
+        border-radius: 50%;
+    }
+
+    .carousel-button.prev {
+        left: 10px;
+    }
+
+    .carousel-button.next {
+        right: 10px;
+    }
+
+    .carousel-button:hover {
+        background-color: rgba(0, 0, 0, 0.8);
+    }
+
+    .heart-button {
+        font-size: 24px;
+        color: #ff4d4d;
+        background: none;
+        border: none;
+        cursor: pointer;
+        transition: transform 0.2s;
+    }
+
+    .heart-button:hover {
+        transform: scale(1.2);
+    }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="heart-button" onclick="toggleHeart(this)">&#9825;</button>
+        <button class="heart-button" onclick="toggleHeart(this)">&#9825;</button>
+        <button class="heart-button" onclick="toggleHeart(this)">&#9825;</button>
+        <button class="heart-button" onclick="toggleHeart(this)">&#9825;</button>
+        <button class="heart-button" onclick="toggleHeart(this)">&#9825;</button>
+        <button class="heart-button" onclick="toggleHeart(this)">&#9825;</button>
+        <button class="heart-button" onclick="toggleHeart(this)">&#9825;</button>
+        <button class="heart-button" onclick="toggleHeart(this)">&#9825;</button>
+        <button class="heart-button" onclick="toggleHeart(this)">&#9825;</button>
+        <button class="heart-button" onclick="toggleHeart(this)">&#9825;</button>
+        <button class="heart-button" onclick="toggleHeart(this)">&#9825;</button>
+        <button class="heart-button" onclick="toggleHeart(this)">&#9825;</button>
+        <button class="heart-button" onclick="toggleHeart(this)">&#9825;</button>
+        <button class="heart-button" onclick="toggleHeart(this)">&#9825;</button>
+        <h1 class="header">I will miss you, I know I dony always show it but I will</h1>
+        <div class="button-grid">
+            <button onclick="showMessage('Welcome! This is your personalized guide to navigate life\'s moments. I’m always with you through these words.')">When You First Receive This</button>
+            <button onclick="showMessage('First Day Checklist: 1. Unpack and decorate your room: Put up some posters, fairy lights, and a giant Gamecock flag – because why not? 2. Go to your first class like you own the place: Walk in with confidence (even if you have no idea where you are). 3. Find the nearest Chick-fil-A: You need that first taste of Carolina goodness. 4. Take a campus stroll: Pretend you’re in a movie montage with a killer soundtrack. 5. Set a fun goal: Post a selfie with a stranger and say, \'First day vibes, USC style.\'')">First Day Fun Checklist</button>
+            <button onclick="showMessage('First Week Checklist: 1. Go to at least one Gamecock game or watch one with friends, Ill facetime you if you havent made friends yet: Feel that school spirit! 2. Join a club that sounds fun (even if you don&rsquo;t know what it is): This is how you find your people., bonus points if you join more than one 3. Make a playlist for your new life: Include at least three songs that scream, &quot;I am ready for USC.&quot; 4. Check out the Horseshoe: Take a picture with your new bestie (even if it&rsquo;s just the zibra stuffed animal infront of atleast one statue). 5. Eat at least one snack from a food truck: Bonus points if it&rsquo;s fried and has a weird ass name. 6. Try to learn the Gamecock chant: Practice in the mirror and shout it out like you mean it! 7. Walk through the quad and pretend you&r the bees nees because you are 8. Sign up for something that&rsquo;ll make your future self say, &quot;What was I thinking?&quot;')">First Week Fun & Silly Checklist</button>
+            <button onclick="showMessage('First Month Checklist: 1. Go to a tailgate party: Don’t forget to yell “Go Gamecocks!” when you raise your cup. 2. Host a game night: Invite your neighbors and make up the silliest rules for board games. 3. Take a “campus photo tour”: Snap pics in front of iconic USC spots and create a “How many Gamecock statues can I find?” album. share it with me 4. Go to a farmers market: Pick up a random fruit you’ve never seen and take a bite like a brave soul. put it in the album 5. Plan a picnic with snacks and a Bluetooth speaker: Pretend you’re hosting your own radio show. 6. Dress up in Gamecock gear and join a campus event – any event, even if it’s about learning to knit. 7 Make a “College Survival Playlist” with songs that’ll keep you hyped, no matter what, espeically cause midterms would be coming up 9. Attempt a TikTok dance with your roommates, it would be cool if its the wait, they dont love you like I love you one 10. Write a letter to your future self to be opened at the end of the semester: Include “remember to be epic” and a doodle of the USC mascot.')">First Month Adventure Checklist</button>
+            </button>    
+            <button onclick="showMessage('I am coming to you humbly to say thank you for making me feel things I once believed were unfeasible and inconceivable.Ode to the one I would like to meet for the first time again. The once whose absence from my life has only strengthened my desires and yearning for your love, my admission of love is one whose words escape me yet they slip through my lips like rivers of passion and longing for your embrace. Three simple words, ones to and fro through silks and smiles, I love you, one statement that drew my heart into the ocean of your eyes and the seas of your mind. Thou my darling leavest not the smallest fragment of my heart unoccupied. You will always be mine, one that exists in the labyrinth that is my mind. I searched and soured lands afar for the definition of beauty ode to the one that has answered my question.')">A poem about you 
+            </button>          
+            <button onclick="showMessage('Your kindness—it’s rare and unmatched. You make people feel seen and valued.')">When You Want to Hear My Favorite Trait About You</button>
+            <button onclick="showMessage('Here’s a secret: I save your texts to reread when I’m down')">When You Want to Hear a Secret</button>
+<button onclick="showMessage('The IRS tax agents decide to audit an elderly man, and summon him to the IRS office. The IRS auditor was not surprised when the old man showed up with his attorney.\n\nThe auditor said, ‘Well, sir, you have an extravagant lifestyle and no full-time employment, which you explain by saying that you win money gambling. I\'m not sure the IRS finds that believable.’\n\n‘I’m a great gambler, and I can prove it,’ says the elderly guy. ‘How about a demonstration?’ The auditor thinks for a moment and says, ‘Okay. Go ahead.’\n\nThe old guy says, ‘I’ll bet you a thousand dollars that I can bite my own eye.’ The auditor thinks a moment and says, ‘It’s a bet.’ The elderly guy removes his glass eye and bites it. The auditor’s jaw drops. The old guy then says, ‘Now, I’ll bet you two thousand dollars that I can bite my other eye.’\n\nThe auditor can tell he isn’t blind, so he takes the bet. The elderly guy removes his dentures and bites his good eye. The stunned auditor now realizes he has wagered and lost three grand, with his attorney as a witness. He starts to get nervous. ‘Want to go double or nothing?’ the elderly person asks. ‘I’ll bet you six thousand dollars that I can stand on one side of your desk, and pee into that wastebasket on the other side, and never get a drop anywhere in between.’ The auditor, twice burned, is cautious now, but he looks carefully and decides there’s no way this old guy could possibly manage that stunt, so he agrees again.\n\nThe old guy stands beside the desk and unzips his pants, but although he strains mightily, he can’t make the stream reach the wastebasket on the other side, so he pretty much urinates all over the auditor’s desk.\n\nThe auditor leaps with joy, realizing that he has just turned a major loss into a huge win.\n\nBut the elderly guy\'s attorney moans and puts his head in his hands. ‘Are you okay?’ the auditor asks. ‘Not really,’ says the attorney. ‘This morning, when He told me he’d been summoned for an audit, he bet me twenty-five thousand dollars that he could come in here and pee all over your desk and that you’d be happy about it.’')">When you need a joke</button>
+<button onclick="showMessage('Books: The Midnight Library by Matt Haig, The Five People You Meet in Heaven by Mitch Albom, The Space Between Us by Thrity Umrigar, The Book Thief by Markus Zusak, Six of Crows by Leigh Bardugo, The Night Circus by Erin Morgenstern, A Court of Thorns and Roses by Sarah J. Maas, The Priory of the Orange Tree by Samantha Shannon, City of Bones by Cassandra Clare, The Fault in Our Stars by John Green, Eleanor & Park by Rainbow Rowell, Red, White & Royal Blue by Casey McQuiston, Beach Read by Emily Henry, The Song of Achilles by Madeline Miller.')">Book Recommendations</button>
+<button onclick="showMessage('Movies: The Fault in Our Stars, A Walk to Remember, The Pursuit of Happyness, The Notebook, Little Miss Sunshine, Finding Nemo, Up, The Princess Bride, The Sound of Music, Coco, Matilda, The Lion King, Paddington, Moana, Inside Out.')">Movie Recommendations</button>
+<button onclick="showMessage('TV Shows: This Is Us, Stranger Things, Ted Lasso, The Good Place, Anne with an E, Friends, Schitt\'s Creek, Heartstopper, The Mandalorian, Modern Family, The Umbrella Academy')">TV Show Recommendations</button>
+<button onclick="showMessage('WHEN YOU HAVE A BAD DAY: It’s okay to have rough days. Treat yourself with kindness and remember, this too shall pass.')">When You Have A Bad Day</button>
+
+<button onclick="showMessage('I’m always here in spirit. You’re never truly alone – I’m just a call or message away.')">When You Miss Me</button>
+
+<button onclick="showMessage('If you’re having trouble sleeping, try some gentle stretching, deep breathing, or a warm drink, and put on some calming music. The military method—relaxing your face, shoulders, and legs while focusing on a calming scene or repeating “don’t think”—can help you drift off in no time, and techniques like the 4-7-8 breathing method or progressive muscle relaxation can help you unwind and fall asleep more easily.')">When You Can't Sleep</button>
+
+<button onclick="showMessage(' Remember, you are enough just as you are. Focus on your strengths and practice positive self-talk, send me a video of you up talking yourself.')">When You're Feeling Insecure</button>
+
+<button onclick="showMessage('Write down your worries and see if you can solve them one by one. It’s often more manageable on paper.')">When You're Worried About Something</button>
+
+<button onclick="showMessage('Take a step back and reassess. Break things into smaller tasks and tackle them one at a time. Set goals: Write down your goals and visualize how you\'ll feel when you achieve them. Find your why: Focus on why you want to be successful and what you want to accomplish. Prepare and plan: Realize that things won\'t always go as planned, but prepare and plan accordingly. Take care of yourself: Work out, eat well, and think positively. Don\'t compare yourself: Stop comparing yourself to others. Accept change: It\'s okay to lose something when you make a change, as long as you value what you\'ll gain more. Remember that failure is normal: You can learn lessons from failure, and things can change quickly to make things better. Get help when you need it: If you\'re in crisis, call or text 988 to talk to someone or call my number. Know when to quit: It\'s okay to walk away from something if it\'s in your best interest.')">When You Feel Like Giving Up</button>
+
+<button onclick="showMessage('Rest and allow your body to heal. Hydration and good food can work wonders, so take care of yourself. Take zinc and magnesium before also take vitamin C, to make it go faster')">When You're Sick</button>
+
+<button onclick="showMessage(' Look back on your past achievements and be proud. You’re capable of more than you think.')">When You're Doubting Yourself</button>
+
+<button onclick="showMessage('Find the cozy green blanket I gave you or wrap yourself up in something soft. It’s not the same as a real hug, but it can feel comforting.')">When You Need a Hug</button>
+
+<button onclick="showMessage(' Think of three things you love about yourself and say them out loud. Here is some from me. You have a heart that’s bigger than the universe. The kindness and compassion you show to everyone around you inspire me to be a better person. I love how your mind works – the way you think, dream, and approach challenges is incredible. You’re brilliant in a way that’s so uniquely you. You make life feel like an adventure worth having. I’m so grateful for every moment we share together. Your voice is my favorite sound, and your smile is my favorite sight. You light up every room you walk into. You deserve the entire world and more. I hope you know just how special you are to me and everyone lucky enough to know you. You have this incredible way of making every moment more meaningful just by being there. I love your passion and the way your eyes light up when you talk about things you love. It’s one of the most beautiful things about you. You have this rare ability to be both fiercely independent and so deeply loving at the same time. It’s amazing. Your support and encouragement push me to reach higher, and I’m beyond thankful to have you by my side. You make me want to be a better version of myself, and that’s one of the greatest gifts you’ve given me. I could get lost in your eyes for hours, and it would still feel like just a moment. You are the kind of person who makes everyone feel seen and valued. I’m so lucky to be one of those people. Being with you feels like being home – safe, warm, and where I belong.')">When You Need to Hear a Compliment</button>
+
+<button onclick="showMessage('Everyone makes mistakes – it’s part of learning. Be kind to yourself and see it as a chance to grow.')">When You've Made a Mistake</button>
+
+<button onclick="showMessage(' Share your excitement with me, Ill always want to know. Their joy can multiply yours and make the moment even more special.')">When You're Excited About Something</button>
+
+<button onclick="showMessage('List out the pros and cons. Sometimes the answers are clearer when you put them in black and white and although nothing is like that in real life it does help.')">When You're Making a Big Decision</button>
+
+<button onclick="showMessage('Try writing down why you’re angry and then read it aloud. It’s a great way to vent and gain perspective.')">When You're Really Angry</button>
+<button onclick="showMessage('WHEN YOU WANT TO HEAR MY FAVORITE MEMORY WITH YOU; The time I taught you how to skateboard, I took a picture of my hands in your hand and in that moment I was the happiest, I didn’t even care about you skating, despite it being cool, I suggested it so that I could hold your hands, the pictures of our feet together were part of my collage that was on my screensaver for months and it was directly in the middle.')">Favorite Memory</button>
+
+<button onclick="showMessage('Send a message or a meme to reconnect. A small gesture can bridge the gap and restart the conversation.')">Reconnecting</button>
+
+<button onclick="showMessage('It’s okay to feel a little disappointed. I’ll get back to you as soon as I can – you’re important to me, trust me I love you, call me if it\'s important even if it\'s not you aren\'t annoying for calling me multiple times just do it')">No Answer</button>
+
+<button onclick="showMessage('Remember, progress is progress, no matter how small. Keep going; you’re closer than you think.')">Keep Going</button>
+
+<button onclick="showMessage('Laugh at yourself. Everyone makes mistakes, and being able to laugh at them makes you stronger.')">Embarrassment</button>
+
+<button onclick="showMessage(' Close your eyes, and imagine I’m right there with you. The feeling of being loved knows no distance.')">Missing Me</button>
+
+<button onclick="showMessage('Let it out – crying is a natural release. You’ll feel lighter afterward.')">Feeling Down</button>
+
+<button onclick="showMessage('Look at the red box somewhere in your room, and remember the card, and remember what question I asked, in that hall of a dorm which I have not stepped foot in since, remember the days and nights of talking, the breakfast and dinners, and laser tag, and bowling.')">How We Started</button>
+
+<button onclick="showMessage('Celebrate your success, big or small. You did it, and that’s worth acknowledging, text me and I\'ll send you some money to take yourself out.')">Proud Moments</button>
+
+<button onclick="showMessage('Remember the people who care about you. You’re surrounded by love even when you can’t see it.')">Feeling Loved</button>
+
+<button onclick="showMessage('Embrace the new experience, even if it feels awkward at first. Growth happens outside your comfort zone.')">New Experiences</button>
+
+<button onclick="showMessage(' Share the moment with someone who’ll cheer you on. Your wins deserve to be celebrated. Me, Shae, Grace, and especially Nelly.')">Celebrating Wins</button>
+
+<button onclick="showMessage(' Know that I’m cheering you on from afar. I’m proud of you and everything you’re doing, like the New York fasion week, or applying for Disney.')">Important Occasions</button>
+
+<button onclick="showMessage('I love when you say, “You’ve got this.” It’s a reminder that I believe in you.')">Favorite Line</button>
+
+<button onclick="showMessage('It’s okay to feel scared. Take a moment, breathe, and know that courage isn’t the absence of fear; it’s moving forward anyway, you transferred when you were afraid, everything else will be a piece of cake.')">Feeling Scared</button>
+
+<button onclick="showMessage('Find a cozy spot and enjoy a warm drink. A movie or a good book will help or a FaceTime with me.')">Gloomy Weather</button>
+
+<button onclick="showMessage('Step outside and enjoy the fresh air. Whether it’s a walk in the park or simply sitting in the sun, and take a picture for me.')">Beautiful Weather</button>
+
+<button onclick="showMessage('Take a moment each day to appreciate your body, your mind, and your soul. Write down three things you love about yourself.')">Self-Love Tips</button>
+
+<button onclick="showMessage('Take a moment to list out three things you’re grateful for. Even on difficult days, there’s always something to appreciate.')">Thankfulness</button>
+
+<button onclick="showMessage('Close your eyes and take three deep breaths. In for 4 seconds, hold for 4, out for 4.')">Calming Down</button>
+
+
+
+        <div id="message-box"></div>
+
+        <div class="carousel">
+            <button class="carousel-button prev" onclick="prevSlide()">&#10094;</button>
+            <div class="carousel-slides">
+                <img src="112532FF-716E-462F-B4C6-5FBF77F945D3_1_105_c.jpeg" class="slide" alt="Slide 1">
+                <img src="A9D307AE-29CC-45EC-AE3C-5B1BCF35688C_1_105_c.jpeg" class="slide" alt="Slide 2">
+                <img src="C4A31E48-6FD2-497E-8C7B-9603AF77B9AA_1_105_c.jpeg" class="slide" alt="Slide 3">
+                <img src="IMG_1930.jpeg" class="slide" alt="Slide 1">
+                <img src="IMG_2510.jpeg" class="slide" alt="Slide 2">
+                <img src="IMG_9722.JPG" class="slide" alt="Slide 3">
+                <img src="IMG_2650.jpeg" class="slide" alt="Slide 1">
+                <img src="IMG_8227.jpeg" class="slide" alt="Slide 2">
+                <img src="IMG_9519.jpeg" class="slide" alt="Slide 3">
+                <img src="IMG_9579.jpeg" class="slide" alt="Slide 3">
+            </div>
+            <button class="carousel-button next" onclick="nextSlide()">&#10095;</button>
+        </div>
+    </section>
+    <div class="voice-message">
+        <h3>Voice Messages</h3>
+        <audio controls>
+            <source src="St Philips Place 3.m4a" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+        <audio controls>
+            <source src="St Philips Place 4.m4a" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+        <audio controls>
+            <source src="St Philips Place 5.m4a" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+        <audio controls>
+            <source src="Vanderhorst St 2.m4a" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
+  
+    <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/4v0Cye6OVHsqN3e8WPEa5J?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+    <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/7efMZHuCfjiuyjZU9afKhX?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+    <script>
+        function showMessage(message) {
+            const messageBox = document.getElementById('message-box');
+            messageBox.style.display = 'block';
+            messageBox.textContent = message;
+        }
+        let currentIndex = 0;
+
+function updateCarousel() {
+    const slides = document.querySelector('.carousel-slides');
+    const totalSlides = document.querySelectorAll('.slide').length;
+
+    // Ensure the carousel loops correctly
+    if (currentIndex < 0) {
+        currentIndex = totalSlides - 1;
+    } else if (currentIndex >= totalSlides) {
+        currentIndex = 0;
+    }
+
+    slides.style.transform = `translateX(-${currentIndex * 100}%)`;
+}
+
+function prevSlide() {
+    currentIndex--;
+    updateCarousel();
+}
+
+function nextSlide() {
+    currentIndex++;
+    updateCarousel();
+}
+
+// Autoscroll function
+function startAutoscroll() {
+    setInterval(() => {
+        nextSlide();
+    }, 3000); // Change slide every 3 seconds
+}
+
+// Start autoscroll when the page loads
+document.addEventListener('DOMContentLoaded', startAutoscroll);
+
+
+
+    function toggleHeart(button) {
+        if (button.innerHTML === '❤') {
+            button.innerHTML = '&#9825;'; // Empty heart
+        } else {
+            button.innerHTML = '❤'; // Filled heart
+        }
+    }
+
+
+    </script>
+</body>
+</html>
